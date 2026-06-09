@@ -485,7 +485,7 @@ export default function Navbar() {
               onClick={() => setDropdown(null)}
               className="flex-1 py-3.5 bg-orange-50 rounded-xl text-center text-xs font-black text-[#F4612B] border border-orange-200 active:scale-95 transition-all"
             >
-               индивидуальные Tours
+              👤 Individual Tours
             </Link>
           </motion.div>
         )}
