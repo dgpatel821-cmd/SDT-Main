@@ -164,8 +164,9 @@ export default function BookTour() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Invalid email";
     if (!form.phone.trim()) e.phone = "Phone is required";
     else if (!/^\d{10}$/.test(form.phone)) e.phone = "Phone must be 10 digits";
-    if (form.persons === "" || Number(form.persons) < 2) {
-      e.persons = "Minimum 2 persons required";
+    const minPersons = type === "individual" ? 4 : 2;
+    if (form.persons === "" || Number(form.persons) < minPersons) {
+      e.persons = `Minimum ${minPersons} persons required`;
     } else if (type === "group" && Number(form.persons) > availSeats) {
       e.persons = `Only ${availSeats} seats available`;
     } else if (Number(form.persons) > 20) {
@@ -312,8 +313,9 @@ export default function BookTour() {
     );
   }
 
+  const minPersonsLimit = type === "individual" ? 4 : 2;
   const isPersonsInvalid =
-    form.persons === "" || Number(form.persons) < 2 ||
+    form.persons === "" || Number(form.persons) < minPersonsLimit ||
     (type === "group" && Number(form.persons) > availSeats);
 
   /* ============================================================
@@ -495,9 +497,9 @@ export default function BookTour() {
               <div>
                 <input
                   type="number"
-                  min="2"
+                  min={type === "individual" ? "4" : "2"}
                   max="100"
-                  placeholder="Number of Persons (Min 2) *"
+                  placeholder={type === "individual" ? "Number of Persons (Min 4) *" : "Number of Persons (Min 2) *"}
                   value={form.persons}
                   onChange={(e) => {
                     const val = e.target.value;
@@ -517,7 +519,7 @@ export default function BookTour() {
                     >
                       {type === "group" && Number(form.persons) > availSeats
                         ? `⚠️ Only ${availSeats} seats left!`
-                        : "Minimum 2 persons required"}
+                        : `Minimum ${type === "individual" ? 4 : 2} persons required`}
                     </motion.p>
                   )}
                 </AnimatePresence>
