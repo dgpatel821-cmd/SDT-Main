@@ -81,7 +81,7 @@ const TourCard = ({ tour, type }) => {
               {tour.images.map((img, i) => (
                 <div key={i} className="h-[220px] sm:h-[240px]">
                   <img
-                    src={`https://api.sdtour.online${img}`}
+                    src={`${window.API_BASE_URL}${img}`}
                     alt={tour.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />

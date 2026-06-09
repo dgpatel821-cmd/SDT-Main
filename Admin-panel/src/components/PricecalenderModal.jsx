@@ -17,7 +17,7 @@ export default function PricecalenderModal({ hotel, close }) {
 
   const fetchMonthPrices = async () => {
     const res = await axios.get(
-      "https://api.sdtour.online/hotels/month-prices",
+      window.API_BASE_URL + "/hotels/month-prices",
       {
         params: {
           hotelId: hotel._id,
@@ -51,7 +51,7 @@ export default function PricecalenderModal({ hotel, close }) {
   const savePrices = async () => {
     // ensure all dates are normalized strings
     const payload = prices.map(p => ({ date: normalize(p.date), price: p.price }));
-    await axios.post("https://api.sdtour.online/hotels/month-prices", {
+    await axios.post(window.API_BASE_URL + "/hotels/month-prices", {
       hotelId: hotel._id,
       roomType,
       prices: payload

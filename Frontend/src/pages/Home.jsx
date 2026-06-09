@@ -16,7 +16,7 @@ import axios from "axios";
 import TourCard from "../component/TourCard";
 import TourCardSkeleton from "../component/TourCardSkeleton";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 export default function Home() {
 

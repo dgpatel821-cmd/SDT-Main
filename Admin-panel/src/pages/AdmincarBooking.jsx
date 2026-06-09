@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 const formatDate = (date) => {
   const d = new Date(date);

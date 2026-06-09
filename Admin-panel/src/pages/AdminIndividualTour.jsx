@@ -11,7 +11,7 @@ import {
 import { toast } from "react-toastify";
 import AdminItinerary from "../components/Adminiteranary";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 /* ================= IMAGE SLIDER ================= */
 const AdminImageSlider = ({ images }) => {

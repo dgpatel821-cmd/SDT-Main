@@ -3,7 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);

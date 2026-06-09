@@ -63,7 +63,7 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      await axios.post("https://api.sdtour.online/Contact/enquiry", formData);
+      await axios.post(window.API_BASE_URL + "/Contact/enquiry", formData);
       toast.success("Thank you! We will contact you shortly.");
 
       // Reset form

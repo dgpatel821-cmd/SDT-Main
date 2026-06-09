@@ -5,7 +5,7 @@ import DayAccordion from "../component/DayAccordian";
 import WhyChooseUs from "../component/WhyChooseUs";
 import { motion } from "framer-motion";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 const isValidObjectId = (id) =>
   /^[0-9a-fA-F]{24}$/.test(id);

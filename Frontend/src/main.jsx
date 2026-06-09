@@ -9,7 +9,7 @@ import "react-day-picker/dist/style.css";import axios from "axios";
 
 // 🔥 GLOBAL CONFIG: Stop infinite loading if server is slow
 axios.defaults.timeout = 10000;
-axios.defaults.baseURL = "https://api.sdtour.online";
+axios.defaults.baseURL = window.API_BASE_URL;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

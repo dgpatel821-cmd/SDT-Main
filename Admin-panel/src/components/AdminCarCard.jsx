@@ -25,7 +25,7 @@ import {
   Info
 } from "lucide-react";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 const getCarIcon = (name) => {
   if (!name) return { icon: Info, label: "Info" };
   const lName = name.toLowerCase();

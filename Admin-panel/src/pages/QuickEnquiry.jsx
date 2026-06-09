@@ -4,7 +4,7 @@ import { Trash2, User, Phone, Mail, MessageSquare, Bell } from "lucide-react";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 export default function QuickEnquiry() {
   const [enquiries, setEnquiries] = useState([]);

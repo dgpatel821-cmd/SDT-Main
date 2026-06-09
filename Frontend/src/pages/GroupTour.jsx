@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import TourCard from "../component/TourCard";
 import TourCardSkeleton from "../component/TourCardSkeleton";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 const GroupTour = () => {
   const [tours, setTours] = useState([]);

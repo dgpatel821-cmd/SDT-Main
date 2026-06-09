@@ -4,7 +4,7 @@ import { X, Trash2, Plus, Wifi, Coffee, Car, Waves, ThermometerSnowflake, Tv, Ut
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 
-const API_BASE = "https://api.sdtour.online/car-facilities";
+const API_BASE = window.API_BASE_URL + "/car-facilities";
 
 const AVAILABLE_ICONS = [
   { name: "wifi", Icon: Wifi },

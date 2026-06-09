@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import CarCanceletion from "../component/CarCanceletion";
 import { ArrowLeft, CheckCircle, Info } from "lucide-react";
 
-const API_BASE = "https://api.sdtour.online";
+const API_BASE = window.API_BASE_URL;
 
 /* ===== HELPER FOR RAZORPAY ===== */
 const loadRazorpayScript = () =>

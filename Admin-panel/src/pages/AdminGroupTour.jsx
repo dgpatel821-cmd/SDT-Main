@@ -11,7 +11,7 @@ import {
 import { toast } from "react-toastify";
 import AdminIteranary from "../components/Adminiteranary";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 /* ================= IMAGE SLIDER ================= */
 const AdminImageSlider = ({ images }) => {
@@ -115,7 +115,7 @@ const AdminGroupTour = () => {
 
   /* FETCH */
   const fetchTours = async () => {
-    const res = await axios.get("https://api.sdtour.online/group-tours");
+    const res = await axios.get(window.API_BASE_URL + "/group-tours");
     setTours(res.data);
   };
 
@@ -212,7 +212,7 @@ const AdminGroupTour = () => {
   /* DELETE */
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this tour?")) return;
-    await axios.delete(`https://api.sdtour.online/group-tours/${id}`);
+    await axios.delete(`${window.API_BASE_URL}/group-tours/${id}`);
     toast.info("Tour deleted 🗑️", { theme: "light" });
     fetchTours();
   };

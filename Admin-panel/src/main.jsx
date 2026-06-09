@@ -6,7 +6,7 @@ import "./index.css";
 import axios from "axios";
 
 // 🔥 GLOBAL CONFIG: Ensure Admin talks to the correct server
-axios.defaults.baseURL = "https://api.sdtour.online";
+axios.defaults.baseURL = window.API_BASE_URL;
 axios.defaults.timeout = 10000;
 
 ReactDOM.createRoot(document.getElementById("root")).render(

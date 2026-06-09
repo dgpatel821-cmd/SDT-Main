@@ -4,7 +4,7 @@ import { X, Trash2, Plus } from "lucide-react";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 
-const API_BASE = "https://api.sdtour.online/car-categories";
+const API_BASE = window.API_BASE_URL + "/car-categories";
 
 export default function CarCategoryManageModal({ onClose }) {
   const [categories, setCategories] = useState([]);

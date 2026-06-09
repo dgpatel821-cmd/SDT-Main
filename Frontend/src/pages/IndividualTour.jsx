@@ -7,7 +7,7 @@ import TourCardSkeleton from "../component/TourCardSkeleton";
 const IndividualTour = () => {
   const [tours, setTours] = useState([]);
    const [loading, setLoading] = useState(true);
-   const BASE_URL = "https://api.sdtour.online";
+   const BASE_URL = window.API_BASE_URL;
 
   useEffect(() => {
   const fetchTours = async () => {

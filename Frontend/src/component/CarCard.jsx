@@ -24,7 +24,7 @@ const getCarIcon = (name) => {
   return Info;
 };
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 export default function CarCard({ car }) {
   const navigate = useNavigate();

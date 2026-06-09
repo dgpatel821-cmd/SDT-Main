@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import TourCancel from "../component/TourCancel";
 import { Armchair, CheckCircle, ChevronRight, ArrowLeft } from "lucide-react";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 /* ===== HELPER ===== */
 const loadRazorpayScript = () =>

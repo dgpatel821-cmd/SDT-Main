@@ -5,7 +5,7 @@ import CarCard from "../component/CarCard";
 import CarCardSkeleton from "../component/CarCardSkeleton";
 import { Search } from "lucide-react";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 export default function Cars() {
   const [cars, setCars] = useState([]);

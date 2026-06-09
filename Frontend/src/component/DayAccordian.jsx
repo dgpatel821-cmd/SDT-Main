@@ -7,7 +7,7 @@ import {
 } from "react-icons/io";
 import { FiCheckCircle, FiHome } from "react-icons/fi";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 const DayAccordion = ({ data = [] }) => {
   const [openDay, setOpenDay] = useState(null);

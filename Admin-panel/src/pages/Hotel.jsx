@@ -21,7 +21,7 @@ export default function Hotel() {
 
   const fetchHotels = async () => {
     try {
-      const res = await axios.get("https://api.sdtour.online/hotels");
+      const res = await axios.get(window.API_BASE_URL + "/hotels");
       setHotels(res.data);
     } catch (err) {
       console.error("Fetch hotels failed", err);
@@ -30,7 +30,7 @@ export default function Hotel() {
 
   const fetchCities = async () => {
     try {
-      const res = await axios.get("https://api.sdtour.online/cities");
+      const res = await axios.get(window.API_BASE_URL + "/cities");
       setCities(res.data);
     } catch (err) {
       console.error("Fetch cities failed", err);

@@ -7,7 +7,7 @@ import AdminCarCard from "../components/AdminCarCard";
 import CarCategoryManageModal from "../components/CarCategoryManageModal";
 import CarFacilityManageModal from "../components/CarFacilityManageModal";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 export default function AdminCar() {
   const [cars, setCars] = useState([]);

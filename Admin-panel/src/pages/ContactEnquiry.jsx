@@ -11,7 +11,7 @@ import {
   CalendarDays
 } from "lucide-react";
 
-const BASE_URL = "https://api.sdtour.online";
+const BASE_URL = window.API_BASE_URL;
 
 export default function AdminContactEnquiry() {
   const [enquiries, setEnquiries] = useState([]);
