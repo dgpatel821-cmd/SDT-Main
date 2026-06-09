@@ -74,15 +74,32 @@ exports.updateCar = async (req, res) => {
       return res.status(404).json({ message: "Car not found" });
     }
 
-    /* 🔥 DELETE OLD IMAGES IF NEW ONES ARE UPLOADED */
-    let images = car.images;
+    /* 🔥 SELECTIVE DELETION & MERGING OF IMAGES */
+    let existingImages = [];
+    if (req.body.existingImages) {
+      if (Array.isArray(req.body.existingImages)) {
+        existingImages = req.body.existingImages;
+      } else {
+        existingImages = [req.body.existingImages];
+      }
+    }
 
+    // Delete any old images that were removed in the UI
+    car.images.forEach(img => {
+      if (!existingImages.includes(img)) {
+        deleteFile(img);
+      }
+    });
+
+    // Add newly uploaded files
+    let newImages = [];
     if (req.files && req.files.length > 0) {
-      car.images.forEach(img => deleteFile(img));
-      images = req.files.map(
+      newImages = req.files.map(
         file => `/uploads/cars/${file.filename}`
       );
     }
+
+    const images = [...existingImages, ...newImages];
 
     const updatedCar = await Car.findByIdAndUpdate(
       req.params.id,

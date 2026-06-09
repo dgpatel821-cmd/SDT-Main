@@ -9,6 +9,7 @@ const BASE_URL = window.API_BASE_URL;
 
 export default function EditCarModal({ car, onClose, onUpdated }) {
   const [images, setImages] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
   const [form, setForm] = useState({
     name: "",
     type: "",
@@ -49,6 +50,7 @@ export default function EditCarModal({ car, onClose, onUpdated }) {
         fuelType: car.fuelType || "petrol",
         features: car.features || []
       });
+      setExistingImages(car.images || []);
     }
   }, [car]);
 
@@ -64,6 +66,10 @@ export default function EditCarModal({ car, onClose, onUpdated }) {
         }
       });
 
+      // Append existing images to keep
+      existingImages.forEach(img => data.append("existingImages", img));
+
+      // Append new images
       images.forEach(img => data.append("images", img));
 
       await axios.put(`${BASE_URL}/cars/${car._id}`, data);
@@ -178,10 +184,33 @@ export default function EditCarModal({ car, onClose, onUpdated }) {
             </div>
           </div>
 
+          {/* EXISTING IMAGES */}
+          {existingImages.length > 0 && (
+            <div>
+              <span className="text-sm font-semibold text-gray-600 block mb-1">
+                Existing Images (Hover to delete)
+              </span>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {existingImages.map((img, index) => (
+                  <div key={index} className="relative group w-16 h-16 rounded-xl overflow-hidden border border-gray-200">
+                    <img src={`${BASE_URL}${img}`} alt="car" className="w-full h-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => setExistingImages(prev => prev.filter(x => x !== img))}
+                      className="absolute inset-0 bg-red-600/80 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-bold transition-opacity cursor-pointer"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* IMAGE REPLACE */}
           <label className="block">
-            <span className="text-sm text-gray-600">
-              Replace Images
+            <span className="text-sm font-semibold text-gray-600">
+              Add New Images
             </span>
             <input
               type="file"
@@ -190,7 +219,7 @@ export default function EditCarModal({ car, onClose, onUpdated }) {
               className="block mt-2 w-full text-sm text-gray-600
                 file:mr-4 file:py-2 file:px-4
                 file:rounded-full file:border-0
-                file:bg-[#F4612B]/10 file:text-[#F4612B]"
+                file:bg-[#F4612B]/10 file:text-[#F4612B] cursor-pointer"
             />
           </label>
 
