@@ -381,9 +381,9 @@ export default function Navbar() {
                               )
                             }
                           >
-                            <span>{m.name.replace(" â–¾", "")}</span>
+                            <span>{m.name.replace(" ▼", "")}</span>
                             <span className="text-lg font-bold">
-                              {dropdown === m.name ? "âˆ’" : "+"}
+                              {dropdown === m.name ? "-" : "+"}
                             </span>
                           </button>
 
