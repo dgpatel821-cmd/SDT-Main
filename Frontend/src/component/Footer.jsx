@@ -85,7 +85,7 @@ export default function Footer() {
 
       {/* ================= BOTTOM ================= */}
       <div className="bg-white text-gray-800 mt-16 rounded-t-3xl">
-        <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        <div className="max-w-7xl mx-auto px-6 pt-10 pb-24 md:py-10 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
 
           <div>
             <img src="/logo.webp" alt="Logo" className="h-12 mb-3" />
