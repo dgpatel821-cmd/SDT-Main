@@ -17,6 +17,14 @@ const BASE_URL = window.API_BASE_URL;
 const AdminImageSlider = ({ images }) => {
   const [index, setIndex] = useState(0);
 
+  useEffect(() => {
+    if (!images || images.length <= 1) return;
+    const interval = setInterval(() => {
+      setIndex((i) => (i === images.length - 1 ? 0 : i + 1));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [images]);
+
   if (!images || images.length === 0) return null;
 
   const prev = () =>
@@ -105,6 +113,7 @@ const AdminGroupTour = () => {
   const [tours, setTours] = useState([]);
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState(emptyForm);
+  const [existingImages, setExistingImages] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showItinerary, setShowItinerary] = useState(false);
@@ -140,6 +149,9 @@ const AdminGroupTour = () => {
     fd.append("discount", form.discount);
     fd.append("totalSeats", form.totalSeats !== undefined ? form.totalSeats : 49);
     fd.append("bookedSeats", form.bookedSeats !== undefined ? form.bookedSeats : 0);
+
+    // Append existing images to keep
+    existingImages.forEach((img) => fd.append("existingImages", img));
 
     if (form.images) {
       Array.from(form.images).forEach((img) =>
@@ -187,6 +199,7 @@ const AdminGroupTour = () => {
        calcNights = calcDays - 1;
     }
 
+    setExistingImages(tour.images || []);
     setForm({
       title: tour.title,
       description: tour.description,
@@ -496,9 +509,31 @@ const AdminGroupTour = () => {
                   </div>
                 </div>
 
+                {/* EXISTING IMAGES */}
+                {editingId && existingImages.length > 0 && (
+                  <div className="border p-3 rounded-lg bg-gray-50">
+                    <label className="text-sm font-bold text-[#f4612b] block mb-2">Existing Images (Click to delete)</label>
+                    <div className="flex flex-wrap gap-2">
+                      {existingImages.map((img, idx) => (
+                        <div key={idx} className="relative group w-16 h-16 rounded-xl overflow-hidden border border-gray-200">
+                          <img src={`${BASE_URL}${img}`} alt="tour" className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => setExistingImages(prev => prev.filter(x => x !== img))}
+                            className="absolute inset-0 bg-red-600/80 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-bold transition-opacity cursor-pointer"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <label className="block text-sm font-semibold text-gray-700">Add New Images</label>
                 <input type="file" multiple
                   onChange={(e) => setForm({ ...form, images: e.target.files })}
-                  className="w-full border p-2 rounded"
+                  className="w-full border p-2 rounded cursor-pointer"
                 />
 
                 {/* 🔥 INCLUDED TICKETS SECTION */}

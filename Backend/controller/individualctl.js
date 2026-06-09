@@ -21,14 +21,32 @@ exports.updateTour = async (req, res) => {
     const tour = await IndividualTour.findById(req.params.id);
     if (!tour) return res.status(404).json({ msg: "Tour not found" });
 
-    // 🔥 DELETE OLD IMAGES IF NEW IMAGES UPLOADED
-    if (req.files && req.files.length > 0) {
-      deleteImagesFromDisk(tour.images);
+    // 🔥 SELECTIVE IMAGE DELETE & MERGE
+    let existingImages = [];
+    if (req.body.existingImages) {
+      if (Array.isArray(req.body.existingImages)) {
+        existingImages = req.body.existingImages;
+      } else {
+        existingImages = [req.body.existingImages];
+      }
+    }
 
-      tour.images = req.files.map(
+    if (tour.images && tour.images.length > 0) {
+      tour.images.forEach(img => {
+        if (!existingImages.includes(img)) {
+          deleteImagesFromDisk([img]);
+        }
+      });
+    }
+
+    let newImages = [];
+    if (req.files && req.files.length > 0) {
+      newImages = req.files.map(
         (file) => `/uploads/individual-tours/${file.filename}`
       );
     }
+
+    tour.images = [...existingImages, ...newImages];
 
     // UPDATE OTHER FIELDS
     tour.title = req.body.title;

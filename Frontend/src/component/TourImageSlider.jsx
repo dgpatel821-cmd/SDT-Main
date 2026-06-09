@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+const BASE_URL = window.API_BASE_URL;
+
 const TourImageSlider = ({ images = [] }) => {
   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (!images || images.length <= 1) return;
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [images]);
 
   if (!images.length) return null;
 
@@ -18,7 +28,7 @@ const TourImageSlider = ({ images = [] }) => {
       <AnimatePresence mode="wait">
         <motion.img
           key={index}
-          src={`https://sdt-7.onrender.com${images[index]}`}
+          src={`${BASE_URL}${images[index]}`}
           alt=""
           className="h-full w-full object-cover"
           initial={{ opacity: 0, x: 40 }}

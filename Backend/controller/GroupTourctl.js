@@ -83,17 +83,33 @@ exports.updateTour = async (req, res) => {
     }
 
     /* ================= IMAGE UPDATE ================= */
-    if (req.files && req.files.length > 0) {
-      // 🔥 remove old images
-      if (tour.images && tour.images.length > 0) {
-        deleteImagesFromDisk(tour.images);
+    let existingImages = [];
+    if (req.body.existingImages) {
+      if (Array.isArray(req.body.existingImages)) {
+        existingImages = req.body.existingImages;
+      } else {
+        existingImages = [req.body.existingImages];
       }
+    }
 
-      // 🔥 save new images
-      tour.images = req.files.map(
+    // Delete any old images that were removed in the UI
+    if (tour.images && tour.images.length > 0) {
+      tour.images.forEach(img => {
+        if (!existingImages.includes(img)) {
+          deleteImagesFromDisk([img]);
+        }
+      });
+    }
+
+    // Add newly uploaded files
+    let newImages = [];
+    if (req.files && req.files.length > 0) {
+      newImages = req.files.map(
         (file) => `/uploads/group-tours/${file.filename}`
       );
     }
+
+    tour.images = [...existingImages, ...newImages];
 
     /* ================= TEXT UPDATE ================= */
     tour.title = req.body.title;
