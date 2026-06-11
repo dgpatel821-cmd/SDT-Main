@@ -143,13 +143,42 @@ export default function BookTour() {
     }
   }, [id, type]);
 
-  // Reset selected vehicle if persons count exceeds its capacity
-  useEffect(() => {
-    if (selectedCar && Number(form.persons) > selectedCar.seats) {
-      setSelectedCar(null);
-      toast.info("Selected vehicle removed as group size exceeds its capacity");
+  const getFilteredCars = (carsList, personsCount) => {
+    const num = Number(personsCount);
+    if (!num) return [];
+    
+    if (num <= 4) {
+      // Swift Dzire or Ertiga
+      return carsList.filter(car => 
+        car.name.toLowerCase().includes("dzire") || 
+        car.name.toLowerCase().includes("ertiga")
+      );
+    } else if (num >= 5 && num <= 7) {
+      // Ertiga or Innova
+      return carsList.filter(car => 
+        car.name.toLowerCase().includes("ertiga") || 
+        car.name.toLowerCase().includes("innova")
+      );
+    } else if (num === 8 || num === 9) {
+      // Force Urbania or Tempo Traveller
+      return carsList.filter(car => car.type === "TempoTraveller");
+    } else {
+      // Bus
+      return carsList.filter(car => car.type === "Buses");
     }
-  }, [form.persons, selectedCar]);
+  };
+
+  // Reset selected vehicle if it is no longer valid for the updated group size
+  useEffect(() => {
+    if (selectedCar && form.persons && cars.length > 0) {
+      const filtered = getFilteredCars(cars, form.persons);
+      const isValid = filtered.some(car => car._id === selectedCar._id);
+      if (!isValid) {
+        setSelectedCar(null);
+        toast.info("Selected vehicle removed as it is not recommended for your updated group size");
+      }
+    }
+  }, [form.persons, selectedCar, cars]);
 
   const fetchTour = async () => {
     try {
@@ -715,11 +744,10 @@ export default function BookTour() {
                 </button>
               </div>
               <div className="p-6 overflow-y-auto space-y-4 flex-1">
-                {cars.filter(car => car.seats >= Number(form.persons)).length === 0 ? (
-                  <p className="text-center text-sm text-gray-500 py-8">No vehicles available with at least {form.persons} seats.</p>
+                {getFilteredCars(cars, form.persons).length === 0 ? (
+                  <p className="text-center text-sm text-gray-500 py-8">No vehicles recommended for {form.persons} travellers.</p>
                 ) : (
-                  cars
-                    .filter(car => car.seats >= Number(form.persons))
+                  getFilteredCars(cars, form.persons)
                     .map(car => (
                       <div key={car._id} className="flex flex-col sm:flex-row gap-4 p-4 border border-gray-200 rounded-xl hover:border-orange-500 transition-all items-center">
                         {car.images && car.images[0] ? (
