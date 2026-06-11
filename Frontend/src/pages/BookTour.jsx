@@ -129,10 +129,27 @@ export default function BookTour() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", persons: "", note: "", travelDate: "" });
   const [errors, setErrors] = useState({});
 
-  /* ===== FETCH TOUR ===== */
+  const [cars, setCars] = useState([]);
+  const [selectedCar, setSelectedCar] = useState(null);
+  const [isCarModalOpen, setIsCarModalOpen] = useState(false);
+
+  /* ===== FETCH TOUR & CARS ===== */
   useEffect(() => {
     if (id && type) fetchTour();
+    if (type === "individual") {
+      axios.get(`${BASE_URL}/cars`)
+        .then(res => setCars(res.data))
+        .catch(err => console.error("Failed to load vehicles", err));
+    }
   }, [id, type]);
+
+  // Reset selected vehicle if persons count exceeds its capacity
+  useEffect(() => {
+    if (selectedCar && Number(form.persons) > selectedCar.seats) {
+      setSelectedCar(null);
+      toast.info("Selected vehicle removed as group size exceeds its capacity");
+    }
+  }, [form.persons, selectedCar]);
 
   const fetchTour = async () => {
     try {
@@ -237,7 +254,12 @@ export default function BookTour() {
         payableAmount,
         remainingAmount,
         note: form.note,
-        selectedSeats: seatsList || []
+        selectedSeats: seatsList || [],
+        selectedVehicleId: selectedCar ? selectedCar._id : null,
+        selectedVehicleName: selectedCar ? selectedCar.name : null,
+        selectedVehiclePricePerKm: selectedCar ? selectedCar.pricePerKm : null,
+        selectedVehicleSeats: selectedCar ? selectedCar.seats : null,
+        selectedVehicleType: selectedCar ? selectedCar.type : null
       });
 
       const bookingId = bookingRes.data._id;
@@ -269,6 +291,7 @@ export default function BookTour() {
               toast.success("Booking & Payment confirmed! 🎉");
               setForm({ name: "", email: "", phone: "", persons: "", note: "", travelDate: "" });
               setSelectedSeats([]);
+              setSelectedCar(null);
               setErrors({});
               setPaymentType("advance");
               setStep("form");
@@ -525,6 +548,43 @@ export default function BookTour() {
                 </AnimatePresence>
               </div>
 
+              {/* VEHICLE SELECTION – INDIVIDUAL ONLY */}
+              {type === "individual" && (
+                <div className="border border-gray-200 rounded-xl p-4 bg-gray-50/50 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-sm font-bold text-gray-700">Vehicle Selection (Optional)</h4>
+                      <p className="text-xs text-gray-500 mt-0.5">
+                        {selectedCar 
+                          ? `Selected: ${selectedCar.name} (${selectedCar.seats} Seats) - ₹${selectedCar.pricePerKm}/km` 
+                          : "Choose a vehicle matching your group size"}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={isPersonsInvalid || !form.persons}
+                      onClick={() => setIsCarModalOpen(true)}
+                      className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                        isPersonsInvalid || !form.persons
+                          ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                          : "bg-[#F4612B] text-white hover:bg-[#e14c1f]"
+                      }`}
+                    >
+                      {selectedCar ? "Change" : "Choose"}
+                    </button>
+                  </div>
+                  {selectedCar && (
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCar(null)}
+                      className="text-xs text-red-500 hover:text-red-700 font-bold inline-block"
+                    >
+                      ✕ Remove Vehicle
+                    </button>
+                  )}
+                </div>
+              )}
+
               {/* NOTE */}
               <div>
                 <textarea
@@ -633,6 +693,67 @@ export default function BookTour() {
           </div>
         </div>
       </div>
+
+      {/* CAR SELECTION MODAL */}
+      <AnimatePresence>
+        {isCarModalOpen && (
+          <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col"
+            >
+              <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+                <h3 className="text-lg font-black text-gray-900">Select Vehicle for {form.persons} Travellers</h3>
+                <button 
+                  type="button"
+                  onClick={() => setIsCarModalOpen(false)}
+                  className="p-1.5 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="p-6 overflow-y-auto space-y-4 flex-1">
+                {cars.filter(car => car.seats >= Number(form.persons)).length === 0 ? (
+                  <p className="text-center text-sm text-gray-500 py-8">No vehicles available with at least {form.persons} seats.</p>
+                ) : (
+                  cars
+                    .filter(car => car.seats >= Number(form.persons))
+                    .map(car => (
+                      <div key={car._id} className="flex flex-col sm:flex-row gap-4 p-4 border border-gray-200 rounded-xl hover:border-orange-500 transition-all items-center">
+                        {car.images && car.images[0] ? (
+                          <img src={`${BASE_URL}${car.images[0]}`} alt={car.name} className="w-full sm:w-32 h-20 object-cover rounded-lg" />
+                        ) : (
+                          <div className="w-full sm:w-32 h-20 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-xs">No Image</div>
+                        )}
+                        <div className="flex-1 text-center sm:text-left space-y-1">
+                          <h4 className="font-bold text-gray-900 text-base">{car.name}</h4>
+                          <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+                            <span className="text-[10px] bg-orange-100 text-[#F4612B] px-2 py-0.5 rounded-full font-bold uppercase">{car.type}</span>
+                            <span className="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full font-bold">{car.seats} Seats</span>
+                            <span className="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold capitalize">{car.fuelType}</span>
+                          </div>
+                          <p className="text-sm text-gray-500 font-semibold">Rate: <span className="text-[#F4612B] font-bold">₹{car.pricePerKm}/km</span></p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedCar(car);
+                            setIsCarModalOpen(false);
+                          }}
+                          className="w-full sm:w-auto px-5 py-2.5 bg-orange-600 text-white text-xs font-black rounded-lg hover:bg-orange-700 transition-all uppercase tracking-wider"
+                        >
+                          Select
+                        </button>
+                      </div>
+                    ))
+                )}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

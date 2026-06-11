@@ -108,6 +108,11 @@ const Bookings = () => {
                     📅 Travel: <span className="text-[#F4612B]">{new Date(b.travelDate).toLocaleDateString("en-IN", { day:'2-digit', month:'short', year:'numeric' })}</span>
                   </p>
                 )}
+                {b.selectedVehicleName && (
+                  <p className="text-xs font-bold text-blue-700 mt-1">
+                    🚗 Vehicle: <span className="text-blue-900">{b.selectedVehicleName} ({b.selectedVehicleSeats} Seats)</span>
+                  </p>
+                )}
               </div>
             </div>
 

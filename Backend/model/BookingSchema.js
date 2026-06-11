@@ -34,6 +34,27 @@ const bookingSchema = new mongoose.Schema(
       default: []
     },
 
+    selectedVehicleId: {
+      type: String,
+      default: null
+    },
+    selectedVehicleName: {
+      type: String,
+      default: null
+    },
+    selectedVehiclePricePerKm: {
+      type: Number,
+      default: null
+    },
+    selectedVehicleSeats: {
+      type: Number,
+      default: null
+    },
+    selectedVehicleType: {
+      type: String,
+      default: null
+    },
+
     status: {
       type: String,
       default: "pending" // pending | confirmed | cancelled
