@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { 
-  X, Trash2, Plus, Wifi, Coffee, Car, ThermometerSnowflake, Tv, Shield, 
-  Map, Phone, Info, Mic, Armchair, Eye, LogOut, Disc, BatteryCharging 
+  X, Trash2, Plus, Wifi, GlassWater, Luggage, Snowflake, Tv, HeartPulse, 
+  MapPin, BatteryCharging, Info, Mic, Armchair, Video, DoorOpen, Compass,
+  Usb, Baby, Lightbulb, Layers, Bed, Flame, Music
 } from "lucide-react";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,20 +11,26 @@ import { motion, AnimatePresence } from "framer-motion";
 const API_BASE = window.API_BASE_URL + "/car-facilities";
 
 const AVAILABLE_ICONS = [
-  { name: "ac", Icon: ThermometerSnowflake },
+  { name: "ac", Icon: Snowflake },
   { name: "wifi", Icon: Wifi },
   { name: "charger", Icon: BatteryCharging },
-  { name: "music", Icon: Tv },
-  { name: "map", Icon: Map },
-  { name: "firstaid", Icon: Shield },
-  { name: "water", Icon: Coffee },
-  { name: "carrier", Icon: Car },
+  { name: "usb", Icon: Usb },
+  { name: "music", Icon: Music },
+  { name: "map", Icon: MapPin },
+  { name: "firstaid", Icon: HeartPulse },
+  { name: "water", Icon: GlassWater },
+  { name: "carrier", Icon: Luggage },
   { name: "tv", Icon: Tv },
   { name: "mic", Icon: Mic },
   { name: "seat", Icon: Armchair },
-  { name: "cctv", Icon: Eye },
-  { name: "exit", Icon: LogOut },
-  { name: "steer", Icon: Disc },
+  { name: "cctv", Icon: Video },
+  { name: "exit", Icon: DoorOpen },
+  { name: "steer", Icon: Compass },
+  { name: "baby", Icon: Baby },
+  { name: "light", Icon: Lightbulb },
+  { name: "blanket", Icon: Layers },
+  { name: "pillow", Icon: Bed },
+  { name: "extinguisher", Icon: Flame },
   { name: "info", Icon: Info },
 ];
 

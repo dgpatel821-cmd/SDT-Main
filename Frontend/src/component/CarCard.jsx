@@ -4,7 +4,8 @@ import {
   Wifi, Users, IndianRupee, Snowflake, Bluetooth,
   MapPin, Music, BatteryCharging, Luggage, Car,
   Coffee, Shield, Info, ArrowRight, Fuel,
-  Tv, Mic, Armchair, Eye, LogOut, Disc
+  Tv, Mic, Armchair, Eye, LogOut, Disc,
+  Usb, GlassWater, Baby, Lightbulb, Layers, Bed, Video, DoorOpen, Compass, ShieldAlert, HeartPulse, ShieldCheck, Flame
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -12,22 +13,34 @@ import { motion } from "framer-motion";
 const getCarIcon = (name) => {
   if (!name) return Info;
   const n = name.toLowerCase();
-  if (n.includes("ac") || n.includes("air") || n.includes("cool")) return Snowflake;
-  if (n.includes("gps") || n.includes("map") || n.includes("nav") || n.includes("track")) return MapPin;
+  
+  if (n.includes("ac") || n.includes("cool")) return Snowflake;
+  if (n.includes("gps") || n.includes("nav") || n.includes("track")) return MapPin;
   if (n.includes("blue") || n.includes("tooth")) return Bluetooth;
   if (n.includes("music") || n.includes("song") || n.includes("audio") || n.includes("sound") || n.includes("speaker")) return Music;
-  if (n.includes("charg") || n.includes("plug") || n.includes("usb") || n.includes("point")) return BatteryCharging;
+  if (n.includes("usb")) return Usb;
+  if (n.includes("charg") || n.includes("plug") || n.includes("point")) return BatteryCharging;
   if (n.includes("luggage") || n.includes("bag") || n.includes("boot") || n.includes("space") || n.includes("carrier")) return Luggage;
   if (n.includes("wifi") || n.includes("internet")) return Wifi;
-  if (n.includes("food") || n.includes("water") || n.includes("drink") || n.includes("bottle")) return Coffee;
+  if (n.includes("water") || n.includes("bottle")) return GlassWater;
+  if (n.includes("food") || n.includes("drink")) return Coffee;
   if (n.includes("fuel") || n.includes("petrol") || n.includes("diesel")) return Fuel;
-  if (n.includes("safe") || n.includes("aid") || n.includes("kit") || n.includes("secur") || n.includes("extinguisher") || n.includes("airbag") || n.includes("abs")) return Shield;
+  if (n.includes("airbag")) return ShieldAlert;
+  if (n.includes("abs") || n.includes("brake")) return ShieldAlert;
+  if (n.includes("first aid")) return HeartPulse;
+  if (n.includes("extinguisher")) return Flame;
+  if (n.includes("safe") || n.includes("secur")) return ShieldCheck;
   if (n.includes("tv") || n.includes("led") || n.includes("screen")) return Tv;
   if (n.includes("mic") || n.includes("speak") || n.includes("voice")) return Mic;
-  if (n.includes("seat") || n.includes("push") || n.includes("reclin") || n.includes("pillow") || n.includes("blanket")) return Armchair;
-  if (n.includes("cctv") || n.includes("camera") || n.includes("eye")) return Eye;
-  if (n.includes("exit") || n.includes("emerg")) return LogOut;
-  if (n.includes("steer") || n.includes("break") || n.includes("wheel")) return Disc;
+  if (n.includes("child") || n.includes("baby")) return Baby;
+  if (n.includes("light")) return Lightbulb;
+  if (n.includes("blanket")) return Layers;
+  if (n.includes("pillow")) return Bed;
+  if (n.includes("pushback") || n.includes("reclin") || n.includes("seat")) return Armchair;
+  if (n.includes("cctv") || n.includes("camera") || n.includes("eye")) return Video;
+  if (n.includes("exit") || n.includes("emerg")) return DoorOpen;
+  if (n.includes("steer") || n.includes("wheel")) return Compass;
+  
   return Info;
 };
 
