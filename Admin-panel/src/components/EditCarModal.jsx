@@ -92,7 +92,7 @@ export default function EditCarModal({ car, onClose, onUpdated }) {
       <motion.div
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
-        className="relative bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl"
+        className="relative bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto"
       >
         {/* ❌ CLOSE BUTTON */}
         <button
@@ -162,25 +162,27 @@ export default function EditCarModal({ car, onClose, onUpdated }) {
               <span className="text-sm font-medium text-gray-700">Vehicle Facilities</span>
               {facilities.length === 0 && <span className="text-xs text-orange-500 italic">Manage Facility to add items</span>}
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {facilities.map(f => (
-                <label key={f._id} className="flex items-center gap-2 text-sm cursor-pointer capitalize bg-gray-50 px-3 py-2 rounded-xl border border-gray-100 hover:border-orange-200">
-                  <input
-                    type="checkbox"
-                    checked={form.features.includes(f.name)}
-                    onChange={() =>
-                      setForm(prev => ({
-                        ...prev,
-                        features: prev.features.includes(f.name)
-                          ? prev.features.filter(x => x !== f.name)
-                          : [...prev.features, f.name]
-                      }))
-                    }
-                    className="accent-[#F4612B] w-4 h-4 cursor-pointer"
-                  />
-                  <span className="font-semibold text-gray-700">{f.name}</span>
-                </label>
-              ))}
+            <div className="max-h-48 overflow-y-auto border border-gray-200 rounded-xl p-3 bg-gray-50/50">
+              <div className="grid grid-cols-2 gap-3">
+                {facilities.map(f => (
+                  <label key={f._id} className="flex items-center gap-2 text-sm cursor-pointer capitalize bg-white px-3 py-2 rounded-xl border border-gray-100 hover:border-orange-200">
+                    <input
+                      type="checkbox"
+                      checked={form.features.includes(f.name)}
+                      onChange={() =>
+                        setForm(prev => ({
+                          ...prev,
+                          features: prev.features.includes(f.name)
+                            ? prev.features.filter(x => x !== f.name)
+                            : [...prev.features, f.name]
+                        }))
+                      }
+                      className="accent-[#F4612B] w-4 h-4 cursor-pointer"
+                    />
+                    <span className="font-semibold text-gray-700">{f.name}</span>
+                  </label>
+                ))}
+              </div>
             </div>
           </div>
 
