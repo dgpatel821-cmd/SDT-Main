@@ -92,24 +92,23 @@ export default function EditCarModal({ car, onClose, onUpdated }) {
       <motion.div
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
-        className="relative bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto"
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col"
       >
-        {/* ❌ CLOSE BUTTON */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4
-          text-gray-400 hover:text-black
-          text-2xl font-semibold transition"
-        >
-          ×
-        </button>
+        {/* ===== HEADER (FIXED) ===== */}
+        <div className="flex items-center justify-between px-6 py-4 border-b">
+          <h2 className="text-xl font-bold text-[#F4612B]">
+            Edit Vehicle
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-black text-xl"
+          >
+            ✕
+          </button>
+        </div>
 
-        {/* HEADER */}
-        <h2 className="text-xl font-bold text-[#F4612B] mb-4">
-          Edit Vehicle
-        </h2>
-
-        <div className="space-y-3">
+        {/* ===== SCROLLABLE FORM ===== */}
+        <div className="p-6 overflow-y-auto space-y-4 hide-scrollbar flex-1">
           <input
             value={form.name}
             onChange={e => setForm({ ...form, name: e.target.value })}
@@ -224,7 +223,10 @@ export default function EditCarModal({ car, onClose, onUpdated }) {
                 file:bg-[#F4612B]/10 file:text-[#F4612B] cursor-pointer"
             />
           </label>
+        </div>
 
+        {/* ===== FOOTER (FIXED) ===== */}
+        <div className="px-6 py-4 border-t">
           <button
             onClick={submit}
             className="w-full bg-[#F4612B] hover:bg-[#e65a0f]
