@@ -1,20 +1,29 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { X, Trash2, Plus, Wifi, Coffee, Car, Waves, ThermometerSnowflake, Tv, Utensils, Dumbbell, Shield, Key, UserCheck, Map, Phone, Info } from "lucide-react";
+import { 
+  X, Trash2, Plus, Wifi, Coffee, Car, ThermometerSnowflake, Tv, Shield, 
+  Map, Phone, Info, Mic, Armchair, Eye, LogOut, Disc, BatteryCharging 
+} from "lucide-react";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 
 const API_BASE = window.API_BASE_URL + "/car-facilities";
 
 const AVAILABLE_ICONS = [
-  { name: "wifi", Icon: Wifi },
   { name: "ac", Icon: ThermometerSnowflake },
+  { name: "wifi", Icon: Wifi },
+  { name: "charger", Icon: BatteryCharging },
   { name: "music", Icon: Tv },
-  { name: "water", Icon: Coffee },
-  { name: "firstaid", Icon: Shield },
-  { name: "carrier", Icon: Car },
   { name: "map", Icon: Map },
-  { name: "charger", Icon: Phone },
+  { name: "firstaid", Icon: Shield },
+  { name: "water", Icon: Coffee },
+  { name: "carrier", Icon: Car },
+  { name: "tv", Icon: Tv },
+  { name: "mic", Icon: Mic },
+  { name: "seat", Icon: Armchair },
+  { name: "cctv", Icon: Eye },
+  { name: "exit", Icon: LogOut },
+  { name: "steer", Icon: Disc },
   { name: "info", Icon: Info },
 ];
 
