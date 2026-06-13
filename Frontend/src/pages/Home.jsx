@@ -302,10 +302,30 @@ export default function Home() {
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center text-[26px] md:text-4xl font-bold mb-10 text-[#f64f12] font-sans-serif"
+          className="text-center text-[26px] md:text-4xl font-bold mb-6 text-[#f64f12] font-sans-serif"
         >
           Popular Tours & Packages
         </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="flex justify-center gap-4 mb-10"
+        >
+          <Link
+            to="/tours/group"
+            className="px-6 py-2.5 bg-[#F4612B] text-white rounded-full font-bold text-sm md:text-base border border-[#F4612B] hover:bg-white hover:text-[#F4612B] transition-all shadow-md"
+          >
+            Group Tour
+          </Link>
+          <Link
+            to="/tours/indivisual"
+            className="px-6 py-2.5 bg-white text-[#F4612B] border border-[#F4612B] rounded-full font-bold text-sm md:text-base hover:bg-[#F4612B] hover:text-white transition-all shadow-md"
+          >
+            Individual Tour
+          </Link>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-6 md:px-12 lg:px-40">
           {toursLoading ? (
