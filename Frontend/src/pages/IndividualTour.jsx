@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import { motion } from "framer-motion";
 import TourCard from "../component/TourCard";
@@ -26,6 +27,16 @@ const IndividualTour = () => {
 
   return (
     <div className="w-full">
+      <Helmet>
+        <title>Custom Individual Tour Packages Gujarat 2026 – Saurashtra Darshan Tours</title>
+        <meta name="description" content="Plan your perfect Gujarat trip with our custom individual tour packages 2026. Personalized itineraries for Somnath, Dwarka, Gir Safari, Rann of Kutch & more. Travel your way with Saurashtra Darshan Tours!" />
+        <meta name="keywords" content="individual tour Gujarat, custom Gujarat tour package, private tour Gujarat, personalized Gujarat travel, Gujarat honeymoon tour, Gujarat solo tour, Gujarat trip planning, customized Saurashtra tour, Gujarat holiday package for couple" />
+        <link rel="canonical" href="https://www.saurashtradarshantour.com/tours/indivisual" />
+        <meta property="og:title" content="Custom Individual Tour Packages Gujarat 2026 – Saurashtra Darshan Tours" />
+        <meta property="og:description" content="Personalized Gujarat tour packages for solo, couples & families. Explore Somnath, Dwarka, Gir, Kutch your way. Book your custom tour today!" />
+        <meta property="og:url" content="https://www.saurashtradarshantour.com/tours/indivisual" />
+        <meta property="og:image" content="https://www.saurashtradarshantour.com/IndividualTour.webp" />
+      </Helmet>
 
       {/* ================= HERO SECTION ================= */}
       <div className="relative w-full h-[60vh] md:h-[75vh] overflow-hidden">

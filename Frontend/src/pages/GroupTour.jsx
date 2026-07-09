@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import { motion } from "framer-motion";
 
@@ -30,6 +31,16 @@ const GroupTour = () => {
 
   return (
     <div className="w-full">
+      <Helmet>
+        <title>Gujarat Group Tour Packages 2026 – Saurashtra Darshan Tours</title>
+        <meta name="description" content="Book the best Gujarat group tour packages 2026. Explore Somnath, Dwarka, Gir Safari, Rann of Kutch, Statue of Unity & more with Saurashtra Darshan Tours. Affordable group travel packages for families & friends." />
+        <meta name="keywords" content="Gujarat group tour packages, group tour Gujarat 2026, Saurashtra group tour, Gujarat pilgrimage group tour, affordable group tour Gujarat, Somnath Dwarka group tour, Gir safari group package, Kutch group travel package, Gujarat family group tour" />
+        <link rel="canonical" href="https://www.saurashtradarshantour.com/tours/group" />
+        <meta property="og:title" content="Gujarat Group Tour Packages 2026 – Saurashtra Darshan Tours" />
+        <meta property="og:description" content="Explore Gujarat in a group! Somnath, Dwarka, Gir, Kutch & more at affordable prices. Book group tour packages with Saurashtra Darshan Tours." />
+        <meta property="og:url" content="https://www.saurashtradarshantour.com/tours/group" />
+        <meta property="og:image" content="https://www.saurashtradarshantour.com/GroupTour.webp" />
+      </Helmet>
 
       {/* ================= HERO SECTION ================= */}
       <div className="relative w-full h-[60vh] md:h-[75vh] overflow-hidden">

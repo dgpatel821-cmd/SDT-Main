@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Phone, Mail, MapPin, Send, Clock, MessageCircle } from 'lucide-react';
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -142,6 +143,15 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 pb-24 md:pb-0">
+      <Helmet>
+        <title>Contact Us – Saurashtra Darshan Tours | Book Gujarat Tour Package</title>
+        <meta name="description" content="Contact Saurashtra Darshan Tours to book your Gujarat tour package. Get expert travel advice for Somnath, Dwarka, Gir, Kutch and all Saurashtra destinations. Call or email us today!" />
+        <meta name="keywords" content="contact Gujarat tour operator, book Gujarat tour, Gujarat travel enquiry, Saurashtra Darshan Tours contact, Gujarat tour booking helpline" />
+        <link rel="canonical" href="https://www.saurashtradarshantour.com/contact" />
+        <meta property="og:title" content="Contact Us – Saurashtra Darshan Tours" />
+        <meta property="og:description" content="Get in touch to plan your perfect Gujarat tour. Expert guidance for Somnath, Dwarka, Gir, Kutch & all Saurashtra destinations." />
+        <meta property="og:url" content="https://www.saurashtradarshantour.com/contact" />
+      </Helmet>
 
       {/* Hero Section */}
       <div className="relative h-[280px] sm:h-[340px] md:h-[420px] lg:h-[480px] overflow-hidden">

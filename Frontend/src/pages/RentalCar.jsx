@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import { motion } from "framer-motion";
 import CarCard from "../component/CarCard";
@@ -52,6 +53,16 @@ export default function Cars() {
 
   return (
     <div className="w-full overflow-x-hidden">
+      <Helmet>
+        <title>Car Rental Gujarat – Tempo Traveller, Innova, Ertiga | Saurashtra Darshan Tours</title>
+        <meta name="description" content="Hire cars and tempo travellers for Gujarat tours. Book Innova, Ertiga, Urbania, Dezire & more for Somnath, Dwarka, Gir, Kutch trips. Affordable car rental service in Gujarat with experienced drivers." />
+        <meta name="keywords" content="car rental Gujarat, tempo traveller Gujarat, Innova hire Gujarat, Gujarat tour car booking, Saurashtra darshan car rental, Gujarat vehicle hire, hire car for Gujarat tour, cab service Gujarat, car booking Somnath Dwarka, Gujarat driver with car" />
+        <link rel="canonical" href="https://www.saurashtradarshantour.com/rentalcar" />
+        <meta property="og:title" content="Car Rental Gujarat – Tempo Traveller & Cab Booking | Saurashtra Darshan Tours" />
+        <meta property="og:description" content="Book comfortable cars & tempo travellers for Gujarat sightseeing. Innova, Ertiga, Urbania & more available for Somnath, Dwarka, Gir, Kutch tours." />
+        <meta property="og:url" content="https://www.saurashtradarshantour.com/rentalcar" />
+        <meta property="og:image" content="https://www.saurashtradarshantour.com/heroofcar.webp" />
+      </Helmet>
 
       {/* ── HERO ── */}
       <div className="relative h-[45vh] md:h-[65vh] w-full overflow-hidden">
