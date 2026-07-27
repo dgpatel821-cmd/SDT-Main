@@ -135,6 +135,18 @@ export default function AdminCarBookings() {
                         <span><b>Email:</b> {b.email}</span>
                       </div>
                     )}
+                    {b.pickupPoint && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] bg-orange-100 text-orange-800 font-bold px-2 py-0.5 rounded uppercase tracking-wider">Pickup</span>
+                        <span className="font-semibold text-gray-800">{b.pickupPoint}</span>
+                      </div>
+                    )}
+                    {b.dropPoint && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] bg-gray-100 text-gray-800 font-bold px-2 py-0.5 rounded uppercase tracking-wider">Drop</span>
+                        <span className="font-semibold text-gray-800">{b.dropPoint}</span>
+                      </div>
+                    )}
                   </div>
                   {b.note && (
                     <div className="mt-2 pt-2 border-t text-xs text-gray-500 leading-relaxed">

@@ -6,7 +6,8 @@ exports.createCarBooking = async (req, res) => {
     const {
       carId, userName, email, phone, startDate, endDate,
       days, pricePerKm, total, note,
-      paymentType, payableAmount, remainingAmount
+      paymentType, payableAmount, remainingAmount,
+      pickupPoint, dropPoint
     } = req.body;
 
     const booking = await CarBooking.create({
@@ -15,6 +16,8 @@ exports.createCarBooking = async (req, res) => {
       paymentType: paymentType || "advance",
       payableAmount: payableAmount || 0,
       remainingAmount: remainingAmount || 0,
+      pickupPoint,
+      dropPoint,
       status: "pending"
     });
 

@@ -19,6 +19,15 @@ const loadRazorpayScript = () =>
     document.body.appendChild(script);
   });
 
+const GUJARAT_CITIES = [
+  "Ahmedabad", "Surat", "Vadodara", "Rajkot", "Gandhinagar", 
+  "Bhavnagar", "Jamnagar", "Junagadh", "Somnath", "Dwarka", 
+  "Bhuj", "Porbandar", "Anand", "Nadiad", "Mehsana", "Morbi", 
+  "Valsad", "Bharuch", "Navsari", "Palanpur", "Patan", "Amreli", 
+  "Himatnagar", "Surendranagar", "Godhra", "Dahod", "Sasan Gir", 
+  "Kevadia (Statue of Unity)", "Diu", "Saputara"
+];
+
 export default function BookCar() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -31,8 +40,15 @@ export default function BookCar() {
     phone: "",
     startDate: "",
     endDate: "",
-    note: ""
+    note: "",
+    pickupPoint: "",
+    dropPoint: ""
   });
+
+  const [pickupSearch, setPickupSearch] = useState("");
+  const [dropSearch, setDropSearch] = useState("");
+  const [showPickupDropdown, setShowPickupDropdown] = useState(false);
+  const [showDropDropdown, setShowDropDropdown] = useState(false);
 
   const [days, setDays] = useState(0);
   const [total, setTotal] = useState(0);
@@ -67,6 +83,9 @@ export default function BookCar() {
     if (!form.name || !form.phone || !form.startDate || !form.endDate) {
       return toast.error("Please fill all required fields");
     }
+    if (!form.pickupPoint || !form.dropPoint) {
+      return toast.error("Please select both Pickup Point and Drop Point");
+    }
     if (!/^\d{10}$/.test(form.phone)) {
       return toast.error("Please enter a valid 10-digit phone number");
     }
@@ -95,7 +114,9 @@ export default function BookCar() {
         note: form.note,
         paymentType,
         payableAmount,
-        remainingAmount
+        remainingAmount,
+        pickupPoint: form.pickupPoint,
+        dropPoint: form.dropPoint
       });
 
       const carBookingId = bookingRes.data.booking._id;
@@ -228,6 +249,100 @@ export default function BookCar() {
                 className="w-full bg-gray-50 border-2 border-transparent focus:border-orange-500 rounded-2xl px-5 py-4 outline-none font-semibold transition-all"
                 rows="3" placeholder="Any special requests or instructions..." value={form.note} onChange={e => setForm({...form, note: e.target.value})}
               />
+            </div>
+
+            {/* Pickup Point with searchable suggestions */}
+            <div className="space-y-1 relative">
+              <label className="font-bold text-gray-400 uppercase text-[10px]">Pickup Point *</label>
+              <input 
+                className="w-full bg-gray-50 border-2 border-transparent focus:border-orange-500 rounded-2xl px-5 py-4 outline-none font-semibold transition-all"
+                placeholder="Type or Select Pickup City" 
+                value={pickupSearch}
+                onFocus={() => setShowPickupDropdown(true)}
+                onBlur={() => setTimeout(() => setShowPickupDropdown(false), 250)}
+                onChange={e => {
+                  const val = e.target.value;
+                  setPickupSearch(val);
+                  setForm(prev => ({ ...prev, pickupPoint: val }));
+                  setShowPickupDropdown(true);
+                }}
+              />
+              <AnimatePresence>
+                {showPickupDropdown && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute z-20 w-full max-h-60 overflow-y-auto bg-white border border-gray-200 rounded-2xl shadow-xl mt-1 py-2"
+                  >
+                    {GUJARAT_CITIES.filter(city => city.toLowerCase().includes(pickupSearch.toLowerCase())).map((city, idx) => (
+                      <div
+                        key={idx}
+                        onClick={() => {
+                          setForm(prev => ({ ...prev, pickupPoint: city }));
+                          setPickupSearch(city);
+                          setShowPickupDropdown(false);
+                        }}
+                        className="px-5 py-3 hover:bg-orange-50 cursor-pointer font-semibold text-gray-700 transition-colors text-sm"
+                      >
+                        {city}
+                      </div>
+                    ))}
+                    {GUJARAT_CITIES.filter(city => city.toLowerCase().includes(pickupSearch.toLowerCase())).length === 0 && (
+                      <div className="px-5 py-3 text-gray-400 italic text-sm">
+                        Use custom city: "{pickupSearch}"
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Drop Point with searchable suggestions */}
+            <div className="space-y-1 relative">
+              <label className="font-bold text-gray-400 uppercase text-[10px]">Drop Point *</label>
+              <input 
+                className="w-full bg-gray-50 border-2 border-transparent focus:border-orange-500 rounded-2xl px-5 py-4 outline-none font-semibold transition-all"
+                placeholder="Type or Select Drop City" 
+                value={dropSearch}
+                onFocus={() => setShowDropDropdown(true)}
+                onBlur={() => setTimeout(() => setShowDropDropdown(false), 250)}
+                onChange={e => {
+                  const val = e.target.value;
+                  setDropSearch(val);
+                  setForm(prev => ({ ...prev, dropPoint: val }));
+                  setShowDropDropdown(true);
+                }}
+              />
+              <AnimatePresence>
+                {showDropDropdown && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute z-20 w-full max-h-60 overflow-y-auto bg-white border border-gray-200 rounded-2xl shadow-xl mt-1 py-2"
+                  >
+                    {GUJARAT_CITIES.filter(city => city.toLowerCase().includes(dropSearch.toLowerCase()) && city !== form.pickupPoint).map((city, idx) => (
+                      <div
+                        key={idx}
+                        onClick={() => {
+                          setForm(prev => ({ ...prev, dropPoint: city }));
+                          setDropSearch(city);
+                          setShowDropDropdown(false);
+                        }}
+                        className="px-5 py-3 hover:bg-orange-50 cursor-pointer font-semibold text-gray-700 transition-colors text-sm"
+                      >
+                        {city}
+                      </div>
+                    ))}
+                    {GUJARAT_CITIES.filter(city => city.toLowerCase().includes(dropSearch.toLowerCase()) && city !== form.pickupPoint).length === 0 && (
+                      <div className="px-5 py-3 text-gray-400 italic text-sm">
+                        Use custom city: "{dropSearch}"
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Payment Mode Selector */}

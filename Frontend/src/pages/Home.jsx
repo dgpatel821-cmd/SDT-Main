@@ -314,16 +314,16 @@ export default function Home() {
           className="flex justify-center gap-4 mb-10"
         >
           <Link
-            to="/tours/group"
+            to="/tours/indivisual"
             className="px-6 py-2.5 bg-[#F4612B] text-white rounded-full font-bold text-sm md:text-base border border-[#F4612B] hover:bg-white hover:text-[#F4612B] transition-all shadow-md"
           >
-            Group Tour
+            Individual Tour
           </Link>
           <Link
-            to="/tours/indivisual"
+            to="/tours/group"
             className="px-6 py-2.5 bg-white text-[#F4612B] border border-[#F4612B] rounded-full font-bold text-sm md:text-base hover:bg-[#F4612B] hover:text-white transition-all shadow-md"
           >
-            Individual Tour
+            Group Tour
           </Link>
         </motion.div>
 

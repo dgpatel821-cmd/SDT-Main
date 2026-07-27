@@ -34,6 +34,14 @@ const carBookingSchema = new mongoose.Schema(
       required: true
     },
     days: Number,
+    pickupPoint: {
+      type: String,
+      required: false
+    },
+    dropPoint: {
+      type: String,
+      required: false
+    },
 
     /* 💰 BILL */
     pricePerKm: Number,
