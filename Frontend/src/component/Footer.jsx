@@ -20,7 +20,7 @@ export default function Footer() {
 
   const socialLinks = [
     { icon: FaFacebookF, url: "https://facebook.com" },
-    { icon: FaInstagram, url: "https://instagram.com" },
+    { icon: FaInstagram, url: "https://www.instagram.com/saurashtradarshantour?igsh=MWoyYnp0eGJyc3hyNw==" },
     { icon: FaEnvelope, url: "mailto:saurashtradarshantour@gmail.com" },
   ];
 
