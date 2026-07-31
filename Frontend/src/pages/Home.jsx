@@ -80,8 +80,8 @@ export default function Home() {
         const groups = (groupRes.data || []).map(t => ({ ...t, type: "group" }));
         const individuals = (individualRes.data || []).map(t => ({ ...t, type: "individual" }));
         
-        // Take top 4 for the homepage
-        setFetchedTours([...groups, ...individuals].slice(0, 4));
+        // Take top 4 for the homepage (individuals first, as Individual Tour is the primary tab)
+        setFetchedTours([...individuals, ...groups].slice(0, 4));
       } catch (err) {
         console.error("Home Tours Fetch Error:", err);
       } finally {
